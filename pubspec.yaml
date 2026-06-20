@@ -1,0 +1,46 @@
+name: ElearningMali
+description: Application Elearning - Cours, tutoriels et brochures
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2
+  google_fonts: ^6.2.1  # Pour la police Poppins
+  http: ^1.2.2          # Appels API vers le backend Node/Express
+  pdfx: ^2.6.0          # Lecture PDF (cours) - lecture seule, pas de telechargement
+  path_provider: ^2.1.4 # Cache temporaire pour le rendu PDF
+  video_player: ^2.9.2  # Lecteur video pour les tutoriels (streaming S3)
+  shared_preferences: ^2.3.2  # Persistance du token JWT et infos client
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo_arbre.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  # Optionnel : si vous voulez embarquer Poppins en local
+  # fonts:
+  #   - family: Poppins
+  #     fonts:
+  #       - asset: assets/fonts/Poppins-Regular.ttf
+  #       - asset: assets/fonts/Poppins-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/Poppins-Bold.ttf
+  #         weight: 700
