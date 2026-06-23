@@ -17,6 +17,7 @@ dependencies:
   path_provider: ^2.1.4 # Cache temporaire pour le rendu PDF
   video_player: ^2.9.2  # Lecteur video pour les tutoriels (streaming S3)
   shared_preferences: ^2.3.2  # Persistance du token JWT et infos client
+  webview_flutter: ^4.10.0    # WebView pour la page de paiement Orange Money
 
 dev_dependencies:
   flutter_test:

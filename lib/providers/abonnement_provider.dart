@@ -1,8 +1,16 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../models/abonnement_model.dart';
 import '../services/paiement_service.dart';
 
-enum PaiementStatus { idle, loading, success, error }
+enum PaiementStatus {
+  idle,
+  initiating,   // appel POST en cours
+  awaitingUser, // en attente que l'utilisateur confirme (WebView Orange / USSD Moov)
+  polling,      // vérification du statut en cours
+  success,
+  error,
+}
 
 class AbonnementProvider extends ChangeNotifier {
   final PaiementService _service;
@@ -32,7 +40,13 @@ class AbonnementProvider extends ChangeNotifier {
   String numeroTelephone = '';
   PaiementStatus status = PaiementStatus.idle;
   String? errorMessage;
-  PaiementResult? lastResult;
+
+  PaiementInitiationResult? initiation;
+  AbonnementModel? abonnementConfirme;
+
+  Timer? _pollingTimer;
+  static const _pollingInterval = Duration(seconds: 3);
+  static const _pollingTimeout = Duration(minutes: 5);
 
   void selectionnerMethode(MethodePaiement methode) {
     methodeSelectionnee = methode;
@@ -45,11 +59,13 @@ class AbonnementProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get numeroValide =>
-      RegExp(r'^[0-9]{8}$').hasMatch(numeroTelephone);
+  bool get numeroValide => RegExp(r'^[0-9]{8}$').hasMatch(numeroTelephone);
 
-  /// Lance le paiement pour le forfait donné.
-  Future<bool> confirmerPaiement(ForfaitModel forfait) async {
+  /// Étape 1 : initie le paiement.
+  /// - Orange Money : retourne true, `initiation.paymentUrl` doit être
+  ///   ouvert dans une WebView par l'écran appelant.
+  /// - Moov Money : démarre directement le polling de statut.
+  Future<bool> initierPaiement() async {
     if (methodeSelectionnee == null) {
       errorMessage = 'Veuillez choisir un mode de paiement';
       notifyListeners();
@@ -61,40 +77,97 @@ class AbonnementProvider extends ChangeNotifier {
       return false;
     }
 
-    status = PaiementStatus.loading;
+    status = PaiementStatus.initiating;
     errorMessage = null;
     notifyListeners();
 
     try {
-      final result = await _service.payer(
+      final result = await _service.initierPaiement(
         methode: methodeSelectionnee!,
         numeroTelephone: numeroTelephone,
-        forfait: forfait,
       );
-      lastResult = result;
-      status = result.success ? PaiementStatus.success : PaiementStatus.error;
-      if (!result.success) {
-        errorMessage = result.message.isNotEmpty
-            ? result.message
-            : 'Le paiement a échoué';
+      initiation = result;
+
+      if (methodeSelectionnee == MethodePaiement.orangeMoney) {
+        // L'écran appelant doit maintenant ouvrir result.paymentUrl
+        // dans une WebView, puis appeler demarrerPolling() une fois
+        // que la WebView signale une redirection de retour.
+        status = PaiementStatus.awaitingUser;
+      } else {
+        // Moov Money : pas de WebView, on attend la confirmation USSD.
+        status = PaiementStatus.awaitingUser;
+        demarrerPolling();
       }
       notifyListeners();
-      return result.success;
+      return true;
     } catch (e) {
       status = PaiementStatus.error;
-      errorMessage = 'Erreur lors du paiement. Veuillez réessayer.';
+      errorMessage = 'Erreur lors de l\'initiation du paiement. Réessayez.';
       notifyListeners();
       return false;
     }
   }
 
+  /// Étape 2 : démarre le polling de statut (appelé après la WebView
+  /// Orange Money, ou automatiquement pour Moov Money).
+  void demarrerPolling() {
+    if (initiation == null) return;
+    final idTransaction = initiation!.idTransaction;
+    final deadline = DateTime.now().add(_pollingTimeout);
+
+    status = PaiementStatus.polling;
+    notifyListeners();
+
+    _pollingTimer?.cancel();
+    _pollingTimer = Timer.periodic(_pollingInterval, (timer) async {
+      if (DateTime.now().isAfter(deadline)) {
+        timer.cancel();
+        status = PaiementStatus.error;
+        errorMessage = 'Délai dépassé. Vérifiez votre abonnement plus tard.';
+        notifyListeners();
+        return;
+      }
+
+      try {
+        final result = await _service.verifierStatut(idTransaction);
+        if (result.estConfirme) {
+          timer.cancel();
+          abonnementConfirme = result.abonnement;
+          status = PaiementStatus.success;
+          notifyListeners();
+        } else if (result.aEchoue) {
+          timer.cancel();
+          status = PaiementStatus.error;
+          errorMessage = 'Le paiement a échoué ou a été annulé.';
+          notifyListeners();
+        }
+        // Sinon 'En attente' -> on continue le polling silencieusement
+      } catch (_) {
+        // Erreur réseau ponctuelle -> on continue d'essayer
+      }
+    });
+  }
+
+  /// Arrête le polling manuellement (ex: l'utilisateur quitte l'écran).
+  void arreterPolling() {
+    _pollingTimer?.cancel();
+  }
+
   /// Réinitialise le flux pour un nouveau paiement.
   void reset() {
+    _pollingTimer?.cancel();
     methodeSelectionnee = null;
     numeroTelephone = '';
     status = PaiementStatus.idle;
     errorMessage = null;
-    lastResult = null;
+    initiation = null;
+    abonnementConfirme = null;
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _pollingTimer?.cancel();
+    super.dispose();
   }
 }

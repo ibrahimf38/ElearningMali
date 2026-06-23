@@ -240,7 +240,7 @@ class _HistoriqueTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${abonnement.typeForfait} - ${abonnement.montant} F',
+                  '${kForfaitDecouverte.typeForfait} - ${abonnement.montant} F',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

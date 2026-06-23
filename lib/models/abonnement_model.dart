@@ -5,9 +5,8 @@ class AbonnementModel {
   final String idTransaction;
   final DateTime dateDebut;
   final DateTime dateFin;
-  final String statut; // 'actif' | 'expire' | 'en_attente'
+  final String statut; // 'Actif' | 'Expire'
   final int montant;
-  final String typeForfait;
 
   const AbonnementModel({
     required this.id,
@@ -17,7 +16,6 @@ class AbonnementModel {
     required this.dateFin,
     required this.statut,
     required this.montant,
-    required this.typeForfait,
   });
 
   factory AbonnementModel.fromJson(Map<String, dynamic> json) {
@@ -29,7 +27,6 @@ class AbonnementModel {
       dateFin: DateTime.parse(json['date_fin'] as String),
       statut: json['statut'] as String,
       montant: json['montant'] as int,
-      typeForfait: json['type_forfait'] as String? ?? 'Découverte',
     );
   }
 
@@ -41,10 +38,9 @@ class AbonnementModel {
         'date_fin': dateFin.toIso8601String(),
         'statut': statut,
         'montant': montant,
-        'type_forfait': typeForfait,
       };
 
-  bool get estActif => statut == 'actif' && dateFin.isAfter(DateTime.now());
+  bool get estActif => statut == 'Actif' && dateFin.isAfter(DateTime.now());
 }
 
 /// Moyens de paiement disponibles (OrangeMoney / MoovMoney).
@@ -71,7 +67,8 @@ extension MethodePaiementX on MethodePaiement {
   }
 }
 
-/// Représente un forfait d'abonnement proposé.
+/// Représente un forfait d'abonnement proposé (donnée d'affichage,
+/// le backend utilise un montant fixe ABONNEMENT_MONTANT/DUREE_JOURS).
 class ForfaitModel {
   final String typeForfait;
   final int montant;
@@ -86,7 +83,7 @@ class ForfaitModel {
   });
 }
 
-/// Forfait actuellement proposé sur la page Abonnement (Image 1).
+/// Forfait actuellement proposé sur la page Abonnement.
 const ForfaitModel kForfaitDecouverte = ForfaitModel(
   typeForfait: 'Découverte',
   montant: 1000,
@@ -94,25 +91,52 @@ const ForfaitModel kForfaitDecouverte = ForfaitModel(
   dureeJours: 30,
 );
 
-/// Résultat retourné après une tentative de paiement.
-class PaiementResult {
-  final bool success;
+/// Résultat de l'INITIATION d'un paiement (juste après l'appel
+/// POST /paiements/orange-money ou /paiements/moov-money).
+///
+/// Le paiement n'est pas encore confirmé à ce stade :
+/// - Orange Money : `paymentUrl` doit être ouvert dans une WebView
+/// - Moov Money    : le client doit confirmer via notification USSD
+class PaiementInitiationResult {
   final String idTransaction;
   final String message;
-  final AbonnementModel? abonnement;
+  final String? paymentUrl;  // Orange Money uniquement
+  final String? referenceId; // Moov Money uniquement
 
-  const PaiementResult({
-    required this.success,
+  const PaiementInitiationResult({
     required this.idTransaction,
     required this.message,
+    this.paymentUrl,
+    this.referenceId,
+  });
+
+  factory PaiementInitiationResult.fromJson(Map<String, dynamic> json) {
+    return PaiementInitiationResult(
+      idTransaction: json['id_transaction'] as String,
+      message: json['message'] as String? ?? '',
+      paymentUrl: json['payment_url'] as String?,
+      referenceId: json['reference_id'] as String?,
+    );
+  }
+}
+
+/// Résultat du POLLING de statut (GET /paiements/:id/statut).
+class PaiementStatutResult {
+  final String statut; // 'En attente' | 'Succes' | 'Echec'
+  final AbonnementModel? abonnement;
+
+  const PaiementStatutResult({
+    required this.statut,
     this.abonnement,
   });
 
-  factory PaiementResult.fromJson(Map<String, dynamic> json) {
-    return PaiementResult(
-      success: json['success'] as bool? ?? false,
-      idTransaction: json['id_transaction'] as String,
-      message: json['message'] as String? ?? '',
+  bool get estConfirme => statut == 'Succes';
+  bool get aEchoue => statut == 'Echec';
+  bool get estEnAttente => statut == 'En attente';
+
+  factory PaiementStatutResult.fromJson(Map<String, dynamic> json) {
+    return PaiementStatutResult(
+      statut: json['statut'] as String,
       abonnement: json['abonnement'] != null
           ? AbonnementModel.fromJson(json['abonnement'] as Map<String, dynamic>)
           : null,

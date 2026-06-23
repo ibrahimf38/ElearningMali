@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/abonnement_model.dart';
 import '../providers/abonnement_provider.dart';
+import 'orange_money_webview_screen.dart';
 
 class PaiementScreen extends StatefulWidget {
   const PaiementScreen({super.key});
@@ -19,6 +20,108 @@ class _PaiementScreenState extends State<PaiementScreen> {
     super.dispose();
   }
 
+  Future<void> _lancerPaiement(
+    BuildContext context,
+    AbonnementProvider provider,
+    ForfaitModel forfait,
+  ) async {
+    final ok = await provider.initierPaiement();
+    if (!ok || !context.mounted) return;
+
+    if (provider.methodeSelectionnee == MethodePaiement.orangeMoney) {
+      // Ouvre la WebView Orange Money pour que le client confirme.
+      final paymentUrl = provider.initiation?.paymentUrl;
+      if (paymentUrl == null) return;
+
+      final returned = await Navigator.push<bool>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => OrangeMoneyWebViewScreen(paymentUrl: paymentUrl),
+        ),
+      );
+
+      if (!context.mounted) return;
+
+      if (returned == true) {
+        // L'utilisateur est revenu depuis la page Orange -> on démarre
+        // le polling pour confirmer le statut réel du paiement.
+        provider.demarrerPolling();
+      } else {
+        // Fermeture manuelle de la WebView -> on laisse l'utilisateur
+        // réessayer depuis cet écran.
+        return;
+      }
+    }
+    // Pour Moov Money, le polling a déjà démarré automatiquement
+    // dans initierPaiement().
+
+    if (!context.mounted) return;
+    _attendreResultat(context, provider, forfait);
+  }
+
+  /// Affiche un dialog d'attente pendant le polling, puis redirige
+  /// vers l'écran de succès ou affiche l'erreur.
+  Future<void> _attendreResultat(
+    BuildContext context,
+    AbonnementProvider provider,
+    ForfaitModel forfait,
+  ) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => PopScope(
+        canPop: false,
+        child: Consumer<AbonnementProvider>(
+          builder: (context, p, _) {
+            if (p.status == PaiementStatus.success) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(dialogContext).pop(); // ferme le dialog
+                Navigator.pushReplacementNamed(
+                  context,
+                  '/paiement-succes',
+                  arguments: {
+                    'forfait': forfait,
+                    'methode': p.methodeSelectionnee,
+                    'numero': p.numeroTelephone,
+                    'idTransaction': p.initiation?.idTransaction,
+                  },
+                );
+              });
+            } else if (p.status == PaiementStatus.error) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(dialogContext).pop();
+              });
+            }
+
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircularProgressIndicator(color: Color(0xFF2E7D32)),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Confirmation du paiement en cours...',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    p.methodeSelectionnee == MethodePaiement.moovMoney
+                        ? 'Vérifiez votre téléphone et confirmez avec votre code Moov Money.'
+                        : 'Veuillez patienter...',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final forfait =
@@ -26,7 +129,8 @@ class _PaiementScreenState extends State<PaiementScreen> {
     final provider = context.watch<AbonnementProvider>();
     final methode = provider.methodeSelectionnee;
 
-    final isLoading = provider.status == PaiementStatus.loading;
+    final isLoading = provider.status == PaiementStatus.initiating ||
+        provider.status == PaiementStatus.polling;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -162,8 +266,9 @@ class _PaiementScreenState extends State<PaiementScreen> {
                       const SizedBox(height: 18),
 
                       Text(
-                        'Votre paiement sera effectué via le service ${methode?.label ?? ''}.\n'
-                        'Merci de saisir votre numéro de téléphone pour continuer la transaction :',
+                        methode == MethodePaiement.orangeMoney
+                            ? 'Vous serez redirigé vers une page sécurisée Orange Money pour confirmer le paiement avec votre code.'
+                            : 'Vous recevrez une notification sur votre téléphone Moov Money pour confirmer le paiement avec votre code PIN.',
                         style: const TextStyle(
                             color: Colors.white, fontSize: 13, height: 1.5),
                       ),
@@ -182,8 +287,8 @@ class _PaiementScreenState extends State<PaiementScreen> {
                             ),
                             child: Image.asset(
                               methode == MethodePaiement.orangeMoney
-                                  ? 'assets/images/orange.png'
-                                  : 'assets/images/moov.png',
+                                  ? 'assets/images/orange_money_logo.png'
+                                  : 'assets/images/moov_money_logo.png',
                               fit: BoxFit.contain,
                               errorBuilder: (_, __, ___) => Icon(
                                 methode == MethodePaiement.orangeMoney
@@ -282,24 +387,8 @@ class _PaiementScreenState extends State<PaiementScreen> {
                             child: ElevatedButton(
                               onPressed: isLoading
                                   ? null
-                                  : () async {
-                                      final success = await provider
-                                          .confirmerPaiement(forfait);
-                                      if (success && context.mounted) {
-                                        Navigator.pushReplacementNamed(
-                                          context,
-                                          '/paiement-succes',
-                                          arguments: {
-                                            'forfait': forfait,
-                                            'methode': methode,
-                                            'numero':
-                                                provider.numeroTelephone,
-                                            'idTransaction': provider
-                                                .lastResult?.idTransaction,
-                                          },
-                                        );
-                                      }
-                                    },
+                                  : () => _lancerPaiement(
+                                      context, provider, forfait),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF2E7D32),
                                 foregroundColor: Colors.white,

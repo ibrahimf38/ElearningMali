@@ -1,4 +1,8 @@
 /// Configuration centrale de l'API backend (Node.js/Express).
+///
+/// Le backend est en cours de développement par l'équipe.
+/// Une fois l'URL définitive connue, change uniquement `baseUrl`
+/// ci-dessous (ou utilise --dart-define lors du build).
 class ApiConfig {
   /// URL de base de l'API.
   /// Exemple final attendu : "https://api.elearning-mali.com/api"
@@ -7,7 +11,10 @@ class ApiConfig {
   ///   "http://10.0.2.2:3000/api"
   /// Sur device physique (même réseau) :
   ///   "http://192.168.x.x:3000/api"
-  static const String baseUrl = String.fromEnvironment('API_BASE_URL', defaultValue: 'http://10.0.2.2:3000/api',);
+  static const String baseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'http://10.0.2.2:3000/api',
+  );
 
   // ── Endpoints Auth ──────────────────────────────────────────
   static const String login = '/auth/login';
@@ -46,6 +53,8 @@ class ApiConfig {
   static const String abonnement = '/abonnements';
   static const String paiementOrangeMoney = '/paiements/orange-money';
   static const String paiementMoovMoney = '/paiements/moov-money';
+  static String paiementStatut(String idTransaction) =>
+      '/paiements/$idTransaction/statut';
 
   // ── Headers communs ──────────────────────────────────────────
   static Map<String, String> headers({String? token}) => {
