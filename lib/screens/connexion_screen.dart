@@ -116,7 +116,7 @@
 //                                   Navigator.pushReplacementNamed(
 //                                     context,
 //                                     '/verification',
-//                                     arguments: auth.phoneNumber,
+//                                     arguments: auth.phoneNumberE164,
 //                                   );
 //                                 }
 //                               },
@@ -177,10 +177,12 @@
 //   }
 // }
 
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/auth_header.dart';
+import '../widgets/phone_input_field.dart';
 
 class ConnexionScreen extends StatelessWidget {
   const ConnexionScreen({super.key});
@@ -244,30 +246,10 @@ class _ConnexionViewState extends State<_ConnexionView> {
                     ),
                     const SizedBox(height: 28),
 
-                    // Champ téléphone
-                    TextField(
+                    // Champ téléphone — préfixe +223 fixe, non éditable
+                    PhoneInputField(
                       controller: _phoneController,
-                      keyboardType: TextInputType.phone,
                       onChanged: auth.setPhone,
-                      decoration: InputDecoration(
-                        hintText: '+223 Numero de telephone',
-                        hintStyle: const TextStyle(
-                          color: Color(0xFF9E9E9E),
-                          fontSize: 14,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 16),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF2E7D32), width: 1.5),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: Color(0xFF2E7D32), width: 2),
-                        ),
-                      ),
                     ),
 
                     // Message d'erreur

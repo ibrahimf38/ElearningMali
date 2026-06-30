@@ -110,7 +110,7 @@
 //                                   Navigator.pushReplacementNamed(
 //                                     context,
 //                                     '/verification',
-//                                     arguments: auth.phoneNumber,
+//                                     arguments: auth.phoneNumberE164,
 //                                   );
 //                                 }
 //                               },
@@ -195,6 +195,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/auth_header.dart';
+import '../widgets/phone_input_field.dart';
 
 class InscriptionScreen extends StatelessWidget {
   const InscriptionScreen({super.key});
@@ -269,13 +270,10 @@ class _InscriptionViewState extends State<_InscriptionView> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Champ Téléphone
-                    TextField(
+                    // Champ Téléphone — préfixe +223 fixe, non éditable
+                    PhoneInputField(
                       controller: _phoneController,
-                      keyboardType: TextInputType.phone,
                       onChanged: auth.setPhone,
-                      decoration:
-                          _inputDecoration('+223 Numero de telephone'),
                     ),
 
                     // Message d'erreur
