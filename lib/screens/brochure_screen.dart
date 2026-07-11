@@ -36,7 +36,7 @@ class _BrochureScreenState extends State<BrochureScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Impossible de charger les brochures';
+        _error = '';
         _isLoading = false;
       });
     }

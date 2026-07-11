@@ -37,7 +37,7 @@ class _SujetsExamenScreenState extends State<SujetsExamenScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = "Impossible de charger les sujets d'examen";
+        _error = '';
         _isLoading = false;
       });
     }

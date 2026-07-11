@@ -503,9 +503,9 @@ class _TutorielScreenState extends State<TutorielScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      debugPrint('❌ Erreur chargement tutoriels: $e');
+      debugPrint('');
       setState(() {
-        _error = 'Impossible de charger les tutoriels ($e)';
+        _error = '';
         _isLoading = false;
       });
     }

@@ -46,7 +46,7 @@ class _BibliothequeScreenState extends State<BibliothequeScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Impossible de charger la bibliothèque';
+        _error = '';
         _isLoading = false;
       });
     }

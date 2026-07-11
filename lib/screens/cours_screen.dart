@@ -42,7 +42,7 @@ class _CoursScreenState extends State<CoursScreen> {
         await _selectDomaine(domaines.first);
       }
     } catch (e) {
-      setState(() => _error = 'Impossible de charger les domaines');
+      setState(() => _error = '');
     }
   }
 
@@ -66,7 +66,7 @@ class _CoursScreenState extends State<CoursScreen> {
       }
     } catch (e) {
       setState(() {
-        _error = 'Impossible de charger les niveaux';
+        _error = '';
         _isLoadingNiveaux = false;
       });
     }
@@ -87,7 +87,7 @@ class _CoursScreenState extends State<CoursScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = 'Impossible de charger les matières';
+        _error = '';
         _isLoadingMatieres = false;
       });
     }
