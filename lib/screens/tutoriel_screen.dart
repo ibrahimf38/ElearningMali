@@ -557,6 +557,7 @@ class _TutorielScreenState extends State<TutorielScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF5F5F5),
       drawer: const AppDrawer(),
       body: Builder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/abonnement_guard.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -11,16 +12,36 @@ class BottomNavBar extends StatelessWidget {
   });
 
   static const List<Map<String, dynamic>> _items = [
-    {'asset': 'assets/images/nav_etudiant.png', 'fallback': Icons.school_rounded,    'route': '/cours'},
-    {'asset': 'assets/images/nav_maison.png',   'fallback': Icons.home_rounded,       'route': '/accueil'},
-    {'asset': 'assets/images/nav_video.png',    'fallback': Icons.videocam_rounded,   'route': '/tutoriel'},
+    {
+      'asset': 'assets/images/nav_etudiant.png',
+      'fallback': Icons.school_rounded,
+      'route': '/cours'
+    },
+    {
+      'asset': 'assets/images/nav_maison.png',
+      'fallback': Icons.home_rounded,
+      'route': '/accueil'
+    },
+    {
+      'asset': 'assets/images/nav_video.png',
+      'fallback': Icons.videocam_rounded,
+      'route': '/tutoriel'
+    },
   ];
 
   void _handleTap(BuildContext context, int index) {
     if (onTap != null) onTap!(index);
     final route = _items[index]['route'] as String;
     if (route != _routeForIndex(currentIndex)) {
-      Navigator.pushReplacementNamed(context, route);
+      // Les routes '/cours' et '/tutoriel' sont réservées aux abonnés
+      if (route == '/cours' || route == '/tutoriel') {
+        verifierAbonnementEtAcceder(
+          context: context,
+          onAbonne: () => Navigator.pushReplacementNamed(context, route),
+        );
+      } else {
+        Navigator.pushReplacementNamed(context, route);
+      }
     }
   }
 

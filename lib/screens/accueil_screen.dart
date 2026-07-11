@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../services/abonnement_guard.dart';
 import '../widgets/bottom_nav_bar.dart';
 
 class AccueilScreen extends StatefulWidget {
@@ -51,6 +52,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF5F5F5),
       body: Column(
         children: [
@@ -140,7 +142,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                         ),
                       ),
                       Text(
-                        'sur Elearning-Mali',
+                        'sur Mali Kalan ',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13,
@@ -261,7 +263,10 @@ class _AccueilScreenState extends State<AccueilScreen> {
   // ─────────────────────────────────────────────────────────────
   Widget _buildBrochureCard(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/brochure'),
+      onTap: () => verifierAbonnementEtAcceder(
+        context: context,
+        onAbonne: () => Navigator.pushNamed(context, '/brochure'),
+      ),
       child: Container(
         width: double.infinity,
         height: 150,
@@ -324,7 +329,10 @@ class _AccueilScreenState extends State<AccueilScreen> {
 
   Widget _buildSujetsCard(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/sujets'),
+      onTap: () => verifierAbonnementEtAcceder(
+        context: context,
+        onAbonne: () => Navigator.pushNamed(context, '/sujets'),
+      ),
       child: Container(
         height: 185,
         decoration: BoxDecoration(
@@ -377,7 +385,10 @@ class _AccueilScreenState extends State<AccueilScreen> {
 
   Widget _buildBiblioCard(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/bibliotheque'),
+      onTap: () => verifierAbonnementEtAcceder(
+        context: context,
+        onAbonne: () => Navigator.pushNamed(context, '/bibliotheque'),
+      ),
       child: Container(
         height: 190,
         decoration: BoxDecoration(

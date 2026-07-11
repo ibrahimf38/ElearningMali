@@ -33,7 +33,7 @@ class ElearningApp extends StatelessWidget {
     final isLoggedIn = SessionManager.instance.isLoggedIn;
 
     return MaterialApp(
-      title: 'Elearning',
+      title: 'Mali Kalan',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -45,25 +45,25 @@ class ElearningApp extends StatelessWidget {
       // Si déjà connecté, on passe directement à l'accueil.
       initialRoute: isLoggedIn ? '/accueil' : '/onboarding',
       routes: {
-        '/onboarding':   (_) => const OnboardingScreen(),
-        '/connexion':    (_) => const ConnexionScreen(),
-        '/inscription':  (_) => const InscriptionScreen(),
+        '/onboarding': (_) => const OnboardingScreen(),
+        '/connexion': (_) => const ConnexionScreen(),
+        '/inscription': (_) => const InscriptionScreen(),
         '/verification': (_) => const VerificationScreen(),
-        '/accueil':      (_) => const AccueilScreen(),
-        '/cours':        (_) => const CoursScreen(),
-        '/tutoriel':     (_) => const TutorielScreen(),
+        '/accueil': (_) => const AccueilScreen(),
+        '/cours': (_) => const CoursScreen(),
+        '/tutoriel': (_) => const TutorielScreen(),
         '/matiere-detail': (_) => const MatiereDetailScreen(),
-        '/bibliotheque':   (_) => const BibliothequeScreen(),
-        '/brochure':       (_) => const BrochureScreen(),
-        '/sujets':         (_) => const SujetsExamenScreen(),
-        '/tuto-player':    (_) => const TutoPlayerScreen(),
+        '/bibliotheque': (_) => const BibliothequeScreen(),
+        '/brochure': (_) => const BrochureScreen(),
+        '/sujets': (_) => const SujetsExamenScreen(),
+        '/tuto-player': (_) => const TutoPlayerScreen(),
 
         // ── Flux Abonnement / Paiement ────────────────────────
         // Un seul AbonnementProvider partagé entre les 3 écrans
         // (Abonnement -> Paiement -> Succès) via ChangeNotifierProvider
         // posé au-dessus du Navigator dans AbonnementFlow.
         '/abonnement': (_) => const AbonnementFlow(child: AbonnementScreen()),
-        '/paiement':   (_) => const AbonnementFlow(child: PaiementScreen()),
+        '/paiement': (_) => const AbonnementFlow(child: PaiementScreen()),
         '/paiement-succes': (_) =>
             const AbonnementFlow(child: PaiementSuccesScreen()),
       },

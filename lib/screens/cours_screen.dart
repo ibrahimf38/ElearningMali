@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/filtre_model.dart';
 import '../services/filtre_service.dart';
+import '../services/abonnement_guard.dart';
 import '../widgets/section_header.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/bottom_nav_bar.dart';
@@ -113,6 +114,7 @@ class _CoursScreenState extends State<CoursScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFFF5F5F5),
       drawer: const AppDrawer(),
       body: Builder(
@@ -330,13 +332,16 @@ class _CoursScreenState extends State<CoursScreen> {
         return _MatiereTile(
           label: matiere.nomMatiere,
           onTap: () {
-            Navigator.pushNamed(
-              context,
-              '/matiere-detail',
-              arguments: {
-                'idMatiere': matiere.id,
-                'nomMatiere': matiere.nomMatiere,
-              },
+            verifierAbonnementEtAcceder(
+              context: context,
+              onAbonne: () => Navigator.pushNamed(
+                context,
+                '/matiere-detail',
+                arguments: {
+                  'idMatiere': matiere.id,
+                  'nomMatiere': matiere.nomMatiere,
+                },
+              ),
             );
           },
         );
