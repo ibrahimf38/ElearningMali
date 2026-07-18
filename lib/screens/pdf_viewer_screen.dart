@@ -1,8 +1,11 @@
+// import 'dart:io';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdfx/pdfx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// Affiche un PDF en lecture seule depuis une URL S3.
 ///
@@ -75,25 +78,25 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2E7D32),
+        backgroundColor: Color(0xFF2E7D32),
         foregroundColor: Colors.white,
         elevation: 0,
         title: Text(
           widget.titre,
-          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
           overflow: TextOverflow.ellipsis,
         ),
         // Pas d'icônes de partage/téléchargement (lecture seule).
         actions: [
           if (_totalPages > 0)
             Padding(
-              padding: const EdgeInsets.only(right: 16),
+              padding: EdgeInsets.only(right: 16.w),
               child: Center(
                 child: Text(
                   '$_currentPage / $_totalPages',
-                  style: const TextStyle(fontSize: 13, color: Colors.white),
+                  style: TextStyle(fontSize: 13.sp, color: Colors.white),
                 ),
               ),
             ),
@@ -113,19 +116,19 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
     if (_error != null) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline_rounded,
-                  size: 56, color: Color(0xFF9E9E9E)),
-              const SizedBox(height: 12),
+              Icon(Icons.error_outline_rounded,
+                  size: 56.sp, color: Color(0xFF9E9E9E)),
+              SizedBox(height: 12.h),
               Text(
                 _error!,
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Color(0xFF6B7280)),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               ElevatedButton(
                 onPressed: () {
                   setState(() {

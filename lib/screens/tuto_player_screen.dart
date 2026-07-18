@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter/material.dart';
 // import 'package:video_player/video_player.dart';
 // import '../models/tutoriel_video_model.dart';
@@ -89,7 +90,7 @@
 //             // ── Header vert avec retour ──────────────────────
 //             Container(
 //               width: double.infinity,
-//               padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+//               padding: const EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 16.h),
 //               decoration: const BoxDecoration(
 //                 color: Color(0xFF7A9E7E),
 //                 borderRadius: BorderRadius.only(
@@ -102,16 +103,16 @@
 //                   GestureDetector(
 //                     onTap: () => Navigator.pop(context),
 //                     child: const Icon(Icons.arrow_back,
-//                         color: Color(0xFF1A1A2E), size: 24),
+//                         color: Color(0xFF1A1A2E), size: 24.sp),
 //                   ),
-//                   const SizedBox(width: 12),
+//                   const SizedBox(width: 12.w),
 //                   Expanded(
 //                     child: Text(
 //                       video?.titre ?? 'Titre',
 //                       maxLines: 1,
 //                       overflow: TextOverflow.ellipsis,
 //                       style: const TextStyle(
-//                         fontSize: 20,
+//                         fontSize: 20.sp,
 //                         fontWeight: FontWeight.bold,
 //                         color: Color(0xFF1A1A2E),
 //                       ),
@@ -127,7 +128,7 @@
 //             // ── Sous-titre + description ─────────────────────────
 //             Expanded(
 //               child: SingleChildScrollView(
-//                 padding: const EdgeInsets.all(16),
+//                 padding: const EdgeInsets.all(16.r),
 //                 child: Column(
 //                   crossAxisAlignment: CrossAxisAlignment.start,
 //                   children: [
@@ -135,35 +136,35 @@
 //                       const Text(
 //                         'Sous titre',
 //                         style: TextStyle(
-//                           fontSize: 15,
+//                           fontSize: 15.sp,
 //                           fontWeight: FontWeight.bold,
 //                           color: Color(0xFF1A1A2E),
 //                         ),
 //                       ),
-//                       const SizedBox(height: 6),
+//                       const SizedBox(height: 6.h),
 //                       Text(
 //                         video.sousTitre,
 //                         style: const TextStyle(
-//                           fontSize: 13,
+//                           fontSize: 13.sp,
 //                           color: Color(0xFF1A1A2E),
 //                           height: 1.5,
 //                         ),
 //                       ),
-//                       const SizedBox(height: 16),
+//                       const SizedBox(height: 16.h),
 //                     ],
 //                     const Text(
 //                       'Description',
 //                       style: TextStyle(
-//                         fontSize: 15,
+//                         fontSize: 15.sp,
 //                         fontWeight: FontWeight.bold,
 //                         color: Color(0xFF1A1A2E),
 //                       ),
 //                     ),
-//                     const SizedBox(height: 6),
+//                     const SizedBox(height: 6.h),
 //                     Text(
 //                       video?.description ?? '',
 //                       style: const TextStyle(
-//                         fontSize: 13,
+//                         fontSize: 13.sp,
 //                         color: Color(0xFF1A1A2E),
 //                         height: 1.6,
 //                       ),
@@ -201,11 +202,11 @@
 //               mainAxisAlignment: MainAxisAlignment.center,
 //               children: [
 //                 Icon(Icons.error_outline_rounded,
-//                     color: Colors.white54, size: 48),
-//                 SizedBox(height: 8),
+//                     color: Colors.white54, size: 48.sp),
+//                 SizedBox(height: 8.h),
 //                 Text(
 //                   'Vidéo indisponible',
-//                   style: TextStyle(color: Colors.white70, fontSize: 13),
+//                   style: TextStyle(color: Colors.white70, fontSize: 13.sp),
 //                 ),
 //               ],
 //             ),
@@ -239,8 +240,8 @@
 //                     child: GestureDetector(
 //                       onTap: _togglePlayPause,
 //                       child: Container(
-//                         width: 56,
-//                         height: 56,
+//                         width: 56.w,
+//                         height: 56.h,
 //                         decoration: BoxDecoration(
 //                           color: Colors.black.withOpacity(0.4),
 //                           shape: BoxShape.circle,
@@ -250,7 +251,7 @@
 //                               ? Icons.pause_rounded
 //                               : Icons.play_arrow_rounded,
 //                           color: Colors.white,
-//                           size: 34,
+//                           size: 34.sp,
 //                         ),
 //                       ),
 //                     ),
@@ -265,7 +266,7 @@
 //               bottom: 0,
 //               child: Container(
 //                 padding:
-//                     const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+//                     const EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
 //                 decoration: BoxDecoration(
 //                   gradient: LinearGradient(
 //                     begin: Alignment.topCenter,
@@ -281,9 +282,9 @@
 //                     Text(
 //                       _formatDuration(controller.value.position),
 //                       style: const TextStyle(
-//                           color: Colors.white, fontSize: 12),
+//                           color: Colors.white, fontSize: 12.sp),
 //                     ),
-//                     const SizedBox(width: 8),
+//                     const SizedBox(width: 8.w),
 //                     Expanded(
 //                       child: VideoProgressIndicator(
 //                         controller,
@@ -295,10 +296,10 @@
 //                         ),
 //                       ),
 //                     ),
-//                     const SizedBox(width: 8),
+//                     const SizedBox(width: 8.w),
 //                     // Icône plein écran (visuel uniquement)
 //                     const Icon(Icons.fullscreen_rounded,
-//                         color: Colors.white, size: 20),
+//                         color: Colors.white, size: 20.sp),
 //                   ],
 //                 ),
 //               ),
@@ -414,7 +415,7 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
   Widget build(BuildContext context) {
     if (_isFullscreen) return _buildFullscreenPlayer();
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -422,8 +423,8 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
             // ── Header ────────────────────────────────────────
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-              decoration: const BoxDecoration(
+              padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 16.h),
+              decoration: BoxDecoration(
                 color: Color(0xFF7A9E7E),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
@@ -434,16 +435,16 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back, color: Color(0xFF1A1A2E), size: 24),
+                    child: Icon(Icons.arrow_back, color: Color(0xFF1A1A2E), size: 24.sp),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12.w),
                   Expanded(
                     child: Text(
                       _video?.titre ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1A1A2E),
+                      style: TextStyle(
+                        fontSize: 18.sp, fontWeight: FontWeight.bold, color: Color(0xFF1A1A2E),
                       ),
                     ),
                   ),
@@ -457,23 +458,23 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
             // ── Infos ─────────────────────────────────────────
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (_video?.sousTitre.isNotEmpty == true) ...[
-                      const Text('Sous titre',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF1A1A2E))),
-                      const SizedBox(height: 6),
+                      Text('Sous titre',
+                          style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: Color(0xFF1A1A2E))),
+                      SizedBox(height: 6.h),
                       Text(_video!.sousTitre,
-                          style: const TextStyle(fontSize: 13, color: Color(0xFF1A1A2E), height: 1.5)),
-                      const SizedBox(height: 16),
+                          style: TextStyle(fontSize: 13.sp, color: Color(0xFF1A1A2E), height: 1.5)),
+                      SizedBox(height: 16.h),
                     ],
-                    const Text('Description',
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF1A1A2E))),
-                    const SizedBox(height: 6),
+                    Text('Description',
+                        style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: Color(0xFF1A1A2E))),
+                    SizedBox(height: 6.h),
                     Text(_video?.description ?? '',
-                        style: const TextStyle(fontSize: 13, color: Color(0xFF1A1A2E), height: 1.6)),
+                        style: TextStyle(fontSize: 13.sp, color: Color(0xFF1A1A2E), height: 1.6)),
                   ],
                 ),
               ),
@@ -499,11 +500,11 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
         aspectRatio: 16 / 9,
         child: Container(
           color: Colors.black,
-          child: const Center(
+          child: Center(
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(Icons.error_outline_rounded, color: Colors.white54, size: 48),
-              SizedBox(height: 8),
-              Text('Vidéo indisponible', style: TextStyle(color: Colors.white70, fontSize: 13)),
+              Icon(Icons.error_outline_rounded, color: Colors.white54, size: 48.sp),
+              SizedBox(height: 8.h),
+              Text('Vidéo indisponible', style: TextStyle(color: Colors.white70, fontSize: 13.sp)),
             ]),
           ),
         ),
@@ -552,7 +553,7 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
 
     return AnimatedOpacity(
       opacity: _showControls ? 1 : 0,
-      duration: const Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 200),
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -564,30 +565,30 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const SizedBox(),
+            SizedBox(),
             // Bouton play/pause
             GestureDetector(
               onTap: _togglePlayPause,
               child: Container(
-                width: 56, height: 56,
+                width: 56.w, height: 56.h,
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.4),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   controller.value.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-                  color: Colors.white, size: 34,
+                  color: Colors.white, size: 34.sp,
                 ),
               ),
             ),
             // Barre de progression
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
+              padding: EdgeInsets.fromLTRB(10.w, 0.h, 10.w, 8.h),
               child: Row(
                 children: [
                   Text(_formatDuration(position),
-                      style: const TextStyle(color: Colors.white, fontSize: 11)),
-                  const SizedBox(width: 8),
+                      style: TextStyle(color: Colors.white, fontSize: 11.sp)),
+                  SizedBox(width: 8.w),
                   Expanded(
                     child: VideoProgressIndicator(
                       controller,
@@ -599,13 +600,13 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8.w),
                   Text(_formatDuration(duration),
-                      style: const TextStyle(color: Colors.white, fontSize: 11)),
-                  const SizedBox(width: 8),
+                      style: TextStyle(color: Colors.white, fontSize: 11.sp)),
+                  SizedBox(width: 8.w),
                   GestureDetector(
                     onTap: _toggleFullscreen,
-                    child: const Icon(Icons.fullscreen_rounded, color: Colors.white, size: 22),
+                    child: Icon(Icons.fullscreen_rounded, color: Colors.white, size: 22.sp),
                   ),
                 ],
               ),
@@ -639,12 +640,12 @@ class _TutoPlayerScreenState extends State<TutoPlayerScreen> {
                 child: GestureDetector(
                   onTap: _toggleFullscreen,
                   child: Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8.r),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.4),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.fullscreen_exit_rounded, color: Colors.white, size: 24),
+                    child: Icon(Icons.fullscreen_exit_rounded, color: Colors.white, size: 24.sp),
                   ),
                 ),
               ),

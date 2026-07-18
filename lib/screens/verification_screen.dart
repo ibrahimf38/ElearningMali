@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/auth_header.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({super.key});
@@ -42,20 +43,20 @@ class _VerificationView extends StatelessWidget {
               ),
 
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
+                padding: EdgeInsets.fromLTRB(24.w, 32.h, 24.w, 0.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Entre votre\ncode de verification',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF1A1A2E),
                         height: 1.3,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32.h),
 
                     // ── 4 cases OTP ───────────────────────────
                     Row(
@@ -64,45 +65,45 @@ class _VerificationView extends StatelessWidget {
                         _OtpBox(index: i),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     // // ── DEBUG TEMPORAIRE — à retirer après diagnostic ──
                     // Container(
-                    //   padding: const EdgeInsets.all(8),
+                    //   padding: const EdgeInsets.all(8.r),
                     //   color: Colors.yellow.shade100,
                     //   child: Text(
                     //     'DEBUG → tel: "${auth.phoneNumber}" | otp: "${auth.otpDigits.join("-")}" | complete: ${auth.otpComplete} | loading: ${auth.isLoading} | error: ${auth.errorMessage}',
-                    //     style: const TextStyle(fontSize: 10, color: Colors.black87),
+                    //     style: const TextStyle(fontSize: 10.sp, color: Colors.black87),
                     //   ),
                     // ),
-                    // const SizedBox(height: 8),
+                    // const SizedBox(height: 8.h),
 
                     // Timer
                     Text(
                       auth.timerText,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Color(0xFF2E7D32),
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
 
                     // Message info
-                    const Text(
+                    Text(
                       'Nous avons envoyé un code de vérification à votre numéro de téléphone.Veuillez consulter vos SMS.',
                       style: TextStyle(
                         color: Color(0xFF6B7280),
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         height: 1.5,
                       ),
                     ),
-                    const SizedBox(height: 28),
+                    SizedBox(height: 28.h),
 
                     // Bouton Verifier
                     SizedBox(
                       width: double.infinity,
-                      height: 52,
+                      height: 52.h,
                       child: ElevatedButton(
                         onPressed: (!auth.otpComplete || auth.isLoading)
                             ? null
@@ -114,30 +115,30 @@ class _VerificationView extends StatelessWidget {
                                 }
                               },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2E7D32),
+                          backgroundColor: Color(0xFF2E7D32),
                           disabledBackgroundColor:
-                              const Color(0xFF2E7D32).withOpacity(0.5),
+                              Color(0xFF2E7D32).withOpacity(0.5),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(10.r)),
                           elevation: 0,
                         ),
                         child: auth.isLoading
-                            ? const SizedBox(
-                                width: 22, height: 22,
+                            ? SizedBox(
+                                width: 22.w, height: 22.h,
                                 child: CircularProgressIndicator(
                                   color: Colors.white, strokeWidth: 2),
                               )
-                            : const Text(
+                            : Text(
                                 'Verifier',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w600),
                               ),
                       ),
                     ),
 
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
                     // Lien Se connecter
                     Center(
@@ -145,10 +146,10 @@ class _VerificationView extends StatelessWidget {
                         onTap: () => Navigator.pushReplacementNamed(
                             context, '/connexion'),
                         child: RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             text: "j'ai deja un compte? ",
                             style: TextStyle(
-                              color: Color(0xFF6B7280), fontSize: 14),
+                              color: Color(0xFF6B7280), fontSize: 14.sp),
                             children: [
                               TextSpan(
                                 text: "Se connecter",
@@ -164,16 +165,16 @@ class _VerificationView extends StatelessWidget {
 
                     // Renvoi code si timer expiré
                     if (auth.timerExpired) ...[
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12.h),
                       Center(
                         child: GestureDetector(
                           onTap: () => auth.resendOtp(),
-                          child: const Text(
+                          child: Text(
                             'Renvoyer le code',
                             style: TextStyle(
                               color: Color(0xFF2E7D32),
                               fontWeight: FontWeight.w600,
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               decoration: TextDecoration.underline,
                             ),
                           ),
@@ -216,16 +217,16 @@ class _OtpBoxState extends State<_OtpBox> {
     final auth = context.read<AuthProvider>();
 
     return SizedBox(
-      width: 64,
-      height: 64,
+      width: 64.w,
+      height: 64.h,
       child: TextField(
         controller: _controller,
         focusNode: _focus,
         maxLength: 1,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 24,
+        style: TextStyle(
+          fontSize: 24.sp,
           fontWeight: FontWeight.bold,
           color: Color(0xFF1A1A2E),
         ),
@@ -233,14 +234,14 @@ class _OtpBoxState extends State<_OtpBox> {
           counterText: '',
           contentPadding: EdgeInsets.zero,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
             borderSide:
-                const BorderSide(color: Color(0xFF2E7D32), width: 1.5),
+                BorderSide(color: Color(0xFF2E7D32), width: 1.5.r),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
             borderSide:
-                const BorderSide(color: Color(0xFF2E7D32), width: 2.5),
+                BorderSide(color: Color(0xFF2E7D32), width: 2.5.r),
           ),
         ),
         onChanged: (val) {

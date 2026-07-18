@@ -4,6 +4,7 @@ import '../providers/onboarding_provider.dart';
 import '../models/onboarding_model.dart';
 import '../widgets/dots_indicator.dart';
 import '../widgets/onboarding_page_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -41,17 +42,17 @@ class _OnboardingView extends StatelessWidget {
           children: [
             // ── "Sauter" en haut à gauche, en vert ────────────────
             Padding(
-              padding: const EdgeInsets.only(left: 20, top: 16),
+              padding: EdgeInsets.only(left: 20.w, top: 16.h),
               child: AnimatedOpacity(
                 opacity: isLastPage ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 200),
+                duration: Duration(milliseconds: 200),
                 child: GestureDetector(
                   onTap: isLastPage ? null : () => _navigateToLogin(context),
-                  child: const Text(
+                  child: Text(
                     'Sauter',
                     style: TextStyle(
                       color: Color(0xFF2E7D32),
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -73,7 +74,7 @@ class _OnboardingView extends StatelessWidget {
 
             // ── Bottom bar : dots gauche | bouton droite ───────────
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 36),
+              padding: EdgeInsets.fromLTRB(20.w, 0.h, 20.w, 36.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,24 +87,24 @@ class _OnboardingView extends StatelessWidget {
 
                   // Bouton Suivant / Commencez à droite
                   SizedBox(
-                    height: 48,
+                    height: 48.h,
                     child: ElevatedButton(
                       onPressed: isLastPage
                           ? () => _navigateToLogin(context)
                           : () => context.read<OnboardingProvider>().nextPage(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2E7D32),
+                        backgroundColor: Color(0xFF2E7D32),
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        padding: EdgeInsets.symmetric(horizontal: 32.w),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
                         elevation: 0,
                       ),
                       child: Text(
                         isLastPage ? 'Commencez' : 'Suivant',
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: TextStyle(
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

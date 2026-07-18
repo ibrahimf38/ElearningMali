@@ -177,8 +177,8 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/auth_header.dart';
@@ -231,20 +231,20 @@ class _ConnexionViewState extends State<_ConnexionView> {
 
               // ── Formulaire ───────────────────────────────────
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 0),
+                padding: EdgeInsets.fromLTRB(24.w, 32.h, 24.w, 0.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Connecter\nvous a votre compte',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF1A1A2E),
                         height: 1.3,
                       ),
                     ),
-                    const SizedBox(height: 28),
+                    SizedBox(height: 28.h),
 
                     // Champ téléphone — préfixe +223 fixe, non éditable
                     PhoneInputField(
@@ -254,20 +254,19 @@ class _ConnexionViewState extends State<_ConnexionView> {
 
                     // Message d'erreur
                     if (auth.errorMessage != null) ...[
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Text(
                         auth.errorMessage!,
-                        style: const TextStyle(
-                          color: Colors.red, fontSize: 13),
+                        style: TextStyle(color: Colors.red, fontSize: 13.sp),
                       ),
                     ],
 
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
 
                     // Bouton Connectez-vous
                     SizedBox(
                       width: double.infinity,
-                      height: 52,
+                      height: 52.h,
                       child: ElevatedButton(
                         onPressed: auth.isLoading
                             ? null
@@ -282,45 +281,46 @@ class _ConnexionViewState extends State<_ConnexionView> {
                                 }
                               },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2E7D32),
+                          backgroundColor: Color(0xFF2E7D32),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(10.r)),
                           elevation: 0,
                         ),
                         child: auth.isLoading
-                            ? const SizedBox(
-                                width: 22, height: 22,
+                            ? SizedBox(
+                                width: 22.w,
+                                height: 22.h,
                                 child: CircularProgressIndicator(
-                                  color: Colors.white, strokeWidth: 2),
+                                    color: Colors.white, strokeWidth: 2),
                               )
-                            : const Text(
+                            : Text(
                                 'Connectez-vous',
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600),
                               ),
                       ),
                     ),
 
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
                     // Lien S'inscrire
                     Center(
                       child: GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                            context, '/inscription'),
+                        onTap: () =>
+                            Navigator.pushNamed(context, '/inscription'),
                         child: RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             text: "je n'ai pas de compte? ",
                             style: TextStyle(
-                              color: Color(0xFF6B7280), fontSize: 14),
+                                color: Color(0xFF6B7280), fontSize: 14.sp),
                             children: [
                               TextSpan(
                                 text: "S'inscrire",
                                 style: TextStyle(
-                                  color: Color(0xFF2E7D32),
-                                  fontWeight: FontWeight.w600),
+                                    color: Color(0xFF2E7D32),
+                                    fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),

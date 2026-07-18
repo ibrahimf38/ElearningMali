@@ -1,3 +1,4 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter/material.dart';
 // import '../models/cours_model_api.dart';
 // import '../services/contenu_service.dart';
@@ -100,7 +101,7 @@
 //             // ── Header vert avec retour ──────────────────────
 //             Container(
 //               width: double.infinity,
-//               padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+//               padding: const EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 16.h),
 //               decoration: const BoxDecoration(
 //                 color: Color(0xFF7A9E7E),
 //                 borderRadius: BorderRadius.only(
@@ -113,13 +114,13 @@
 //                   GestureDetector(
 //                     onTap: () => Navigator.pop(context),
 //                     child: const Icon(Icons.arrow_back,
-//                         color: Color(0xFF1A1A2E), size: 24),
+//                         color: Color(0xFF1A1A2E), size: 24.sp),
 //                   ),
-//                   const SizedBox(width: 12),
+//                   const SizedBox(width: 12.w),
 //                   Text(
 //                     _nomMatiere,
 //                     style: const TextStyle(
-//                       fontSize: 20,
+//                       fontSize: 20.sp,
 //                       fontWeight: FontWeight.bold,
 //                       color: Color(0xFF1A1A2E),
 //                     ),
@@ -130,34 +131,34 @@
 
 //             // ── Recherche ─────────────────────────────────────
 //             Padding(
-//               padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+//               padding: const EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 12.h),
 //               child: TextField(
 //                 controller: _searchController,
 //                 onChanged: (v) => setState(() => _searchQuery = v),
 //                 decoration: InputDecoration(
 //                   hintText: 'Recherche les lecons',
 //                   hintStyle: const TextStyle(
-//                       color: Color(0xFF9E9E9E), fontSize: 14),
+//                       color: Color(0xFF9E9E9E), fontSize: 14.sp),
 //                   prefixIcon:
 //                       const Icon(Icons.search, color: Color(0xFF2E7D32)),
 //                   filled: true,
 //                   fillColor: Colors.white,
 //                   contentPadding:
-//                       const EdgeInsets.symmetric(vertical: 12),
+//                       const EdgeInsets.symmetric(vertical: 12.h),
 //                   enabledBorder: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
+//                     borderRadius: BorderRadius.circular(12.r),
 //                     borderSide:
-//                         const BorderSide(color: Color(0xFF2E7D32), width: 1.5),
+//                         const BorderSide(color: Color(0xFF2E7D32), width: 1.5.r),
 //                   ),
 //                   focusedBorder: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
+//                     borderRadius: BorderRadius.circular(12.r),
 //                     borderSide:
-//                         const BorderSide(color: Color(0xFF2E7D32), width: 2),
+//                         const BorderSide(color: Color(0xFF2E7D32), width: 2.r),
 //                   ),
 //                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(12),
+//                     borderRadius: BorderRadius.circular(12.r),
 //                     borderSide:
-//                         const BorderSide(color: Color(0xFF2E7D32), width: 1.5),
+//                         const BorderSide(color: Color(0xFF2E7D32), width: 1.5.r),
 //                   ),
 //                 ),
 //               ),
@@ -183,16 +184,16 @@
 //     if (_error != null) {
 //       return Center(
 //         child: Padding(
-//           padding: const EdgeInsets.all(24),
+//           padding: const EdgeInsets.all(24.r),
 //           child: Column(
 //             mainAxisSize: MainAxisSize.min,
 //             children: [
 //               const Icon(Icons.error_outline_rounded,
-//                   size: 48, color: Color(0xFF9E9E9E)),
-//               const SizedBox(height: 10),
+//                   size: 48.sp, color: Color(0xFF9E9E9E)),
+//               const SizedBox(height: 10.h),
 //               Text(_error!,
 //                   style: const TextStyle(color: Color(0xFF6B7280))),
-//               const SizedBox(height: 12),
+//               const SizedBox(height: 12.h),
 //               ElevatedButton(
 //                 onPressed: _loadCours,
 //                 style: ElevatedButton.styleFrom(
@@ -217,11 +218,11 @@
 //     }
 
 //     return GridView.builder(
-//       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+//       padding: const EdgeInsets.fromLTRB(16.w, 0.h, 16.w, 16.h),
 //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
 //         crossAxisCount: 2,
-//         mainAxisSpacing: 14,
-//         crossAxisSpacing: 14,
+//         mainAxisSpacing: 14.w,
+//         crossAxisSpacing: 14.w,
 //         childAspectRatio: 0.85,
 //       ),
 //       itemCount: _filtered.length,
@@ -262,21 +263,21 @@
 //       child: Container(
 //         decoration: BoxDecoration(
 //           color: backgroundColor,
-//           borderRadius: BorderRadius.circular(14),
+//           borderRadius: BorderRadius.circular(14.r),
 //         ),
 //         clipBehavior: Clip.hardEdge,
 //         child: Column(
 //           children: [
 //             // Titre
 //             Padding(
-//               padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+//               padding: const EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 4.h),
 //               child: Text(
 //                 cours.titre,
 //                 textAlign: TextAlign.center,
 //                 maxLines: 1,
 //                 overflow: TextOverflow.ellipsis,
 //                 style: const TextStyle(
-//                   fontSize: 14,
+//                   fontSize: 14.sp,
 //                   fontWeight: FontWeight.bold,
 //                   color: Color(0xFF3E2E1E),
 //                 ),
@@ -287,7 +288,7 @@
 //               child: Center(
 //                 child: Icon(
 //                   Icons.menu_book_rounded,
-//                   size: 44,
+//                   size: 44.sp,
 //                   color: Color(0xFF5D4530),
 //                 ),
 //               ),
@@ -295,7 +296,7 @@
 //             // Footer description
 //             Container(
 //               width: double.infinity,
-//               padding: const EdgeInsets.all(10),
+//               padding: const EdgeInsets.all(10.r),
 //               color: footerColor,
 //               child: Text(
 //                 cours.sousTitre,
@@ -303,7 +304,7 @@
 //                 maxLines: 2,
 //                 overflow: TextOverflow.ellipsis,
 //                 style: const TextStyle(
-//                   fontSize: 11,
+//                   fontSize: 11.sp,
 //                   color: Color(0xFF3E2E1E),
 //                   height: 1.3,
 //                 ),
@@ -411,7 +412,7 @@ class _MatiereDetailScreenState extends State<MatiereDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Color(0xFFF5F5F5),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -419,8 +420,8 @@ class _MatiereDetailScreenState extends State<MatiereDetailScreen> {
             // ── Header vert avec retour ──────────────────────
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-              decoration: const BoxDecoration(
+              padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 16.h),
+              decoration: BoxDecoration(
                 color: Color(0xFF7A9E7E),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(24),
@@ -431,14 +432,14 @@ class _MatiereDetailScreenState extends State<MatiereDetailScreen> {
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back,
-                        color: Color(0xFF1A1A2E), size: 24),
+                    child: Icon(Icons.arrow_back,
+                        color: Color(0xFF1A1A2E), size: 24.sp),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12.w),
                   Text(
                     _nomMatiere,
-                    style: const TextStyle(
-                      fontSize: 20,
+                    style: TextStyle(
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF1A1A2E),
                     ),
@@ -449,34 +450,34 @@ class _MatiereDetailScreenState extends State<MatiereDetailScreen> {
 
             // ── Recherche ─────────────────────────────────────
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 12.h),
               child: TextField(
                 controller: _searchController,
                 onChanged: (v) => setState(() => _searchQuery = v),
                 decoration: InputDecoration(
                   hintText: 'Recherche les lecons',
-                  hintStyle: const TextStyle(
-                      color: Color(0xFF9E9E9E), fontSize: 14),
+                  hintStyle: TextStyle(
+                      color: Color(0xFF9E9E9E), fontSize: 14.sp),
                   prefixIcon:
-                      const Icon(Icons.search, color: Color(0xFF2E7D32)),
+                      Icon(Icons.search, color: Color(0xFF2E7D32)),
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding:
-                      const EdgeInsets.symmetric(vertical: 12),
+                      EdgeInsets.symmetric(vertical: 12.h),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide:
-                        const BorderSide(color: Color(0xFF2E7D32), width: 1.5),
+                        BorderSide(color: Color(0xFF2E7D32), width: 1.5.r),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide:
-                        const BorderSide(color: Color(0xFF2E7D32), width: 2),
+                        BorderSide(color: Color(0xFF2E7D32), width: 2.r),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide:
-                        const BorderSide(color: Color(0xFF2E7D32), width: 1.5),
+                        BorderSide(color: Color(0xFF2E7D32), width: 1.5.r),
                   ),
                 ),
               ),
@@ -502,16 +503,16 @@ class _MatiereDetailScreenState extends State<MatiereDetailScreen> {
     if (_error != null) {
       return Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline_rounded,
-                  size: 48, color: Color(0xFF9E9E9E)),
-              const SizedBox(height: 10),
+              Icon(Icons.error_outline_rounded,
+                  size: 48.sp, color: Color(0xFF9E9E9E)),
+              SizedBox(height: 10.h),
               Text(_error!,
                   style: const TextStyle(color: Color(0xFF6B7280))),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               ElevatedButton(
                 onPressed: _loadCours,
                 style: ElevatedButton.styleFrom(
@@ -536,11 +537,11 @@ class _MatiereDetailScreenState extends State<MatiereDetailScreen> {
     }
 
     return GridView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      padding: EdgeInsets.fromLTRB(16.w, 0.h, 16.w, 16.h),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 14,
-        crossAxisSpacing: 14,
+        mainAxisSpacing: 14.w,
+        crossAxisSpacing: 14.w,
         childAspectRatio: 0.85,
       ),
       itemCount: _filtered.length,
@@ -581,32 +582,32 @@ class _LeconCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(14.r),
         ),
         clipBehavior: Clip.hardEdge,
         child: Column(
           children: [
             // Titre
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+              padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 4.h),
               child: Text(
                 cours.titre,
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 14,
+                style: TextStyle(
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF3E2E1E),
                 ),
               ),
             ),
             // Icône livre
-            const Expanded(
+            Expanded(
               child: Center(
                 child: Icon(
                   Icons.menu_book_rounded,
-                  size: 44,
+                  size: 44.sp,
                   color: Color(0xFF5D4530),
                 ),
               ),
@@ -614,15 +615,15 @@ class _LeconCard extends StatelessWidget {
             // Footer description
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.all(10.r),
               color: footerColor,
               child: Text(
                 cours.sousTitre,
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 11,
+                style: TextStyle(
+                  fontSize: 11.sp,
                   color: Color(0xFF3E2E1E),
                   height: 1.3,
                 ),
