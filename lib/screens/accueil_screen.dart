@@ -463,11 +463,11 @@ class _AccueilScreenState extends State<AccueilScreen> {
 
   final List<Map<String, dynamic>> _slides = [
     {'label': 'Fondamental',   'image': 'assets/images/carousel_fondamental.jpg'},
-    {'label': 'Universitaire', 'image': 'assets/images/carousel_universitaire.jpg'},
     {'label': 'Secondaire',    'image': 'assets/images/carousel_secondaire.jpg'},
-    {'label': 'Technique',     'image': 'assets/images/carousel_technique.jpg'},
-    {'label': 'Art-Culture',   'image': 'assets/images/carousel_art_culture.jpg'},
-    {'label': 'Défense',       'image': 'assets/images/carousel_defense.jpg'},
+    {'label': 'Technique / Professionnel', 'image': 'assets/images/carousel_technique.jpg'},
+    {'label': 'Universitaire', 'image': 'assets/images/carousel_universitaire.jpg'},
+    {'label': 'Musée',   'image': 'assets/images/carousel_art_culture.jpg'},
+    {'label': 'Sécurité / Défense',       'image': 'assets/images/carousel_defense.jpg'},
   ];
 
   @override
