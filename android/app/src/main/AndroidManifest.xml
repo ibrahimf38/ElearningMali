@@ -1,8 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- 1. AJOUT DE LA PERMISSION INTERNET ICI -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:label="Mali Kalan"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"> <!-- 2. AJOUT POUR AUTORISER LE HTTP SI BESOIN -->
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
