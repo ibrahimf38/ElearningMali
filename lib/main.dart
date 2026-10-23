@@ -96,6 +96,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mali_kalan/screens/apropos_screen.dart';
 import 'package:provider/provider.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/connexion_screen.dart';
@@ -114,6 +115,7 @@ import 'screens/paiement_screen.dart';
 import 'screens/paiement_succes_screen.dart';
 import 'providers/abonnement_provider.dart';
 import 'services/session_manager.dart';
+import 'services/navigation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -141,6 +143,9 @@ class ElearningApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           title: 'Mali Kalan',
+          // Permet à ApiClient (qui n'a pas de BuildContext) de rediriger
+          // automatiquement vers /connexion quand le token expire (401).
+          navigatorKey: NavigationService.navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
@@ -164,6 +169,7 @@ class ElearningApp extends StatelessWidget {
             '/brochure': (_) => const BrochureScreen(),
             '/sujets': (_) => const SujetsExamenScreen(),
             '/tuto-player': (_) => const TutoPlayerScreen(),
+            '/apropos': (_) =>  AproposScreen(),
 
             // ── Flux Abonnement / Paiement ────────────────────────
             // Un seul AbonnementProvider partagé entre les 3 écrans

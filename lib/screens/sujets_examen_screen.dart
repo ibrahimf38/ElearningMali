@@ -38,7 +38,7 @@ class _SujetsExamenScreenState extends State<SujetsExamenScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = '';
+        _error = 'Impossible de charger les sujets d\'examen. Vérifiez votre connexion et réessayez.';
         _isLoading = false;
       });
     }

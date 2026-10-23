@@ -450,7 +450,7 @@ class _CoursScreenState extends State<CoursScreen> {
         await _selectDomaine(domaines.first);
       }
     } catch (e) {
-      setState(() => _error = '');
+      setState(() => _error = 'Impossible de charger les domaines. Vérifiez votre connexion et réessayez.');
     }
   }
 
@@ -474,7 +474,7 @@ class _CoursScreenState extends State<CoursScreen> {
       }
     } catch (e) {
       setState(() {
-        _error = '';
+        _error = 'Impossible de charger les niveaux. Vérifiez votre connexion et réessayez.';
         _isLoadingNiveaux = false;
       });
     }
@@ -495,7 +495,7 @@ class _CoursScreenState extends State<CoursScreen> {
       });
     } catch (e) {
       setState(() {
-        _error = '';
+        _error = 'Impossible de charger les matières. Vérifiez votre connexion et réessayez.';
         _isLoadingMatieres = false;
       });
     }
@@ -567,17 +567,18 @@ class _CoursScreenState extends State<CoursScreen> {
                     ),
                   ),
                   SizedBox(width: 10.w),
-                  GestureDetector(
-                    onTap: _openFilter,
-                    child: Container(
-                      width: 48.w,
-                      height: 48.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFEDEDED),
-                        borderRadius: BorderRadius.circular(12.r),
+                  Material(
+                    color: Color(0xFFEDEDED),
+                    borderRadius: BorderRadius.circular(12.r),
+                    child: InkWell(
+                      onTap: _openFilter,
+                      borderRadius: BorderRadius.circular(12.r),
+                      child: SizedBox(
+                        width: 48.w,
+                        height: 48.h,
+                        child: const Icon(Icons.filter_list_rounded,
+                            color: Color(0xFF555555)),
                       ),
-                      child: const Icon(Icons.filter_list_rounded,
-                          color: Color(0xFF555555)),
                     ),
                   ),
                 ],
@@ -626,9 +627,13 @@ class _CoursScreenState extends State<CoursScreen> {
                   itemBuilder: (context, index) {
                     final niveau = _niveaux[index];
                     final isSelected = niveau.id == _selectedNiveau?.id;
-                    return GestureDetector(
-                      onTap: () => _selectNiveau(niveau),
-                      child: Container(
+                    return Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: InkWell(
+                        onTap: () => _selectNiveau(niveau),
+                        borderRadius: BorderRadius.circular(20.r),
+                        child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 18.w),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -653,6 +658,7 @@ class _CoursScreenState extends State<CoursScreen> {
                                 ? Colors.white
                                 : const Color(0xFF555555),
                           ),
+                        ),
                         ),
                       ),
                     );
@@ -766,9 +772,13 @@ class _MatiereTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(12.r),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12.r),
+        child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -800,6 +810,7 @@ class _MatiereTile extends StatelessWidget {
             ),
             const Icon(Icons.chevron_right_rounded, color: Color(0xFF9E9E9E)),
           ],
+        ),
         ),
       ),
     );

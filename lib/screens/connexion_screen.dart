@@ -315,7 +315,7 @@ class _ConnexionViewState extends State<_ConnexionView> {
                             text: "je n'ai pas de compte? ",
                             style: TextStyle(
                                 color: Color(0xFF6B7280), fontSize: 14.sp),
-                            children: [
+                            children: const [
                               TextSpan(
                                 text: "S'inscrire",
                                 style: TextStyle(
@@ -327,6 +327,17 @@ class _ConnexionViewState extends State<_ConnexionView> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 60.h),
+                    Container(
+                      margin: EdgeInsets.only(left: 260.w),
+                      child:  FloatingActionButton(
+                    onPressed: () { Navigator.pushReplacementNamed(context, '/apropos');}, 
+                    child: Icon(Icons.info_outline_rounded),
+                    backgroundColor: Color.fromARGB(255, 229, 149, 69),
+                    
+                    )
+                    )
+                   
                   ],
                 ),
               ),

@@ -370,8 +370,9 @@ class _BibliothequeScreenState extends State<BibliothequeScreen> {
         _isLoading = false;
       });
     } catch (e) {
+      debugPrint('❌ Erreur chargement ebooks: $e');
       setState(() {
-        _error = '';
+        _error = 'Impossible de charger la bibliothèque. Vérifiez votre connexion et réessayez.';
         _isLoading = false;
       });
     }
@@ -557,9 +558,13 @@ class _EbookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(14.r),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14.r),
+        child: Container(
         padding: EdgeInsets.all(14.r),
         decoration: BoxDecoration(
           color: Color(0xFF5F6A5C),
@@ -636,6 +641,7 @@ class _EbookCard extends StatelessWidget {
               ],
             ),
           ],
+        ),
         ),
       ),
     );

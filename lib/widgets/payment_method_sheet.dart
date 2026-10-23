@@ -54,9 +54,13 @@ class _PaymentOption extends StatelessWidget {
   Widget build(BuildContext context) {
     final isOrange = methode == MethodePaiement.orangeMoney;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -98,6 +102,7 @@ class _PaymentOption extends StatelessWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

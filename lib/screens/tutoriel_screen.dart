@@ -503,9 +503,9 @@ class _TutorielScreenState extends State<TutorielScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      debugPrint('');
+      debugPrint('❌ Erreur chargement tutoriels: $e');
       setState(() {
-        _error = '';
+        _error = 'Impossible de charger les tutoriels. Vérifiez votre connexion et réessayez.';
         _isLoading = false;
       });
     }
@@ -786,11 +786,15 @@ class _VideoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/tuto-player', arguments: video);
-      },
-      child: Container(
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(12.r),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, '/tuto-player', arguments: video);
+        },
+        borderRadius: BorderRadius.circular(12.r),
+        child: Container(
         padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -875,6 +879,7 @@ class _VideoTile extends StatelessWidget {
             Icon(Icons.favorite_border_rounded,
                 color: Color(0xFF9E9E9E), size: 20.sp),
           ],
+        ),
         ),
       ),
     );

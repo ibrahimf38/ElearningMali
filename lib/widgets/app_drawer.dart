@@ -82,14 +82,14 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pushNamed(context, '/abonnement');
               },
             ),
-            _DrawerItem(
-              icon: Icons.info_outline_rounded,
-              label: 'A propos de nous',
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, '/a-propos');
-              },
-            ),
+            // _DrawerItem(
+            //   icon: Icons.info_outline_rounded,
+            //   label: 'A propos de nous',
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.pushNamed(context, '/apropos');
+            //   },
+            // ),
 
             const Spacer(),
 

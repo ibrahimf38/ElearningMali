@@ -375,7 +375,7 @@ class _MatiereDetailScreenState extends State<MatiereDetailScreen> {
     } catch (e) {
       debugPrint('❌ Erreur chargement cours: $e');
       setState(() {
-        _error = 'Impossible de charger les leçons. ($e)';
+        _error = 'Impossible de charger les leçons. Vérifiez votre connexion et réessayez.';
         _isLoading = false;
       });
     }
@@ -577,14 +577,16 @@ class _LeconCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(14.r),
-        ),
-        clipBehavior: Clip.hardEdge,
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(14.r),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+        onTap: onTap,
         child: Column(
           children: [
             // Titre
@@ -630,6 +632,7 @@ class _LeconCard extends StatelessWidget {
               ),
             ),
           ],
+        ),
         ),
       ),
     );

@@ -459,14 +459,14 @@ class _AccueilScreenState extends State<AccueilScreen> {
   final PageController _carouselController = PageController();
   int _currentCarousel = 0;
   Timer? _carouselTimer;
-  int _currentNav = 1; // Accueil sélectionné par défaut (icône maison)
+  int  _currentNav = 1; // Accueil sélectionné par défaut (icône maison)
 
   final List<Map<String, dynamic>> _slides = [
-    {'label': 'Fondamental',   'image': 'assets/images/carousel_fondamental.jpg'},
-    {'label': 'Secondaire',    'image': 'assets/images/carousel_secondaire.jpg'},
-    {'label': 'Technique/Profess...', 'image': 'assets/images/carousel_technique.jpg'},
-    {'label': 'Universitaire', 'image': 'assets/images/carousel_universitaire.jpg'},
-    {'label': 'Musée',   'image': 'assets/images/carousel_art_culture.jpg'},
+    {'label': 'Ecole Numérique du Mali(ENM)',   'image': 'assets/images/carousel_fondamental.jpg'},
+    {'label': 'Lycée Numérique du Mali(LNM)',    'image': 'assets/images/carousel_secondaire.jpg'},
+    {'label': 'Professionnel Numérique du Mali(PNM)', 'image': 'assets/images/carousel_technique.jpg'},
+    {'label': 'Universitaire Numérique du Mali(UNM)', 'image': 'assets/images/carousel_universitaire.jpg'},
+    {'label': 'Musée Numérique du Mali(MNM)',   'image': 'assets/images/carousel_art_culture.jpg'},
     {'label': 'Sécurité/Défense',       'image': 'assets/images/carousel_defense.jpg'},
   ];
 
@@ -498,7 +498,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: Column(
         children: [
           // ── Header vert ─────────────────────────────────────
@@ -536,7 +536,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
   // ─────────────────────────────────────────────────────────────
   Widget _buildHeader() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFF7A9E7E),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(28),
@@ -567,7 +567,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => Icon(
                           Icons.park_rounded,
-                          color: Color(0xFF2E7D32),
+                          color: const Color(0xFF2E7D32),
                           size: 30.sp,
                         ),
                       ),
@@ -604,7 +604,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 10.w, vertical: 6.h),
                       decoration: BoxDecoration(
-                        color: Color(0xFFFF6600),
+                        color: const Color(0xFFFF6600),
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                       child: Text(
@@ -623,7 +623,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
 
             // Carousel
             ClipRRect(
-              borderRadius: BorderRadius.only(),
+              borderRadius:const BorderRadius.only(),
               child: SizedBox(
                 width: 350.w,
                 height: 170.h,
@@ -644,7 +644,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                 children: List.generate(_slides.length, (i) {
                   final active = _currentCarousel == i;
                   return AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
+                    duration:const Duration(milliseconds: 300),
                     margin: EdgeInsets.symmetric(horizontal: 3.w),
                     width: active ? 22 : 7,
                     height: 7.h,
@@ -692,9 +692,9 @@ class _AccueilScreenState extends State<AccueilScreen> {
             slide['label'] as String,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 28.sp,
+              fontSize: 20.sp,
               fontWeight: FontWeight.bold,
-              letterSpacing: 1,
+              letterSpacing: 0.5,
               shadows: [Shadow(blurRadius: 8, color: Colors.black54)],
             ),
           ),
@@ -707,19 +707,21 @@ class _AccueilScreenState extends State<AccueilScreen> {
   // CARDS
   // ─────────────────────────────────────────────────────────────
   Widget _buildBrochureCard(BuildContext context) {
-    return GestureDetector(
-      onTap: () => verifierAbonnementEtAcceder(
-        context: context,
-        onAbonne: () => Navigator.pushNamed(context, '/brochure'),
+    return Container(
+      width: double.infinity,
+      height: 150.h,
+      decoration: BoxDecoration(
+        color: Color(0xFF4A7C59),
+        borderRadius: BorderRadius.circular(18.r),
       ),
-      child: Container(
-        width: double.infinity,
-        height: 150.h,
-        decoration: BoxDecoration(
-          color: Color(0xFF4A7C59),
-          borderRadius: BorderRadius.circular(18.r),
+      clipBehavior: Clip.hardEdge,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+        onTap: () => verifierAbonnementEtAcceder(
+          context: context,
+          onAbonne: () => Navigator.pushNamed(context, '/brochure'),
         ),
-        clipBehavior: Clip.hardEdge,
         child: Stack(
           children: [
             // Texte à gauche
@@ -768,23 +770,27 @@ class _AccueilScreenState extends State<AccueilScreen> {
             ),
           ],
         ),
+        ),
       ),
     );
   }
 
   Widget _buildSujetsCard(BuildContext context) {
-    return GestureDetector(
-      onTap: () => verifierAbonnementEtAcceder(
-        context: context,
-        onAbonne: () => Navigator.pushNamed(context, '/sujets'),
+    return Container(
+      height: 185.h,
+      decoration: BoxDecoration(
+        color: Color(0xFFD9B8B8),
+        borderRadius: BorderRadius.circular(18.r),
       ),
-      child: Container(
-        height: 185.h,
-        decoration: BoxDecoration(
-          color: Color(0xFFD9B8B8),
-          borderRadius: BorderRadius.circular(18.r),
+      clipBehavior: Clip.hardEdge,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+        onTap: () => verifierAbonnementEtAcceder(
+          context: context,
+          onAbonne: () => Navigator.pushNamed(context, '/sujets'),
         ),
-        clipBehavior: Clip.hardEdge,
+        child: Padding(
         padding: EdgeInsets.all(14.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -824,23 +830,28 @@ class _AccueilScreenState extends State<AccueilScreen> {
             ),
           ],
         ),
+        ),
+        ),
       ),
     );
   }
 
   Widget _buildBiblioCard(BuildContext context) {
-    return GestureDetector(
-      onTap: () => verifierAbonnementEtAcceder(
-        context: context,
-        onAbonne: () => Navigator.pushNamed(context, '/bibliotheque'),
+    return Container(
+      height: 190.h,
+      decoration: BoxDecoration(
+        color: Color(0xFFC8BB95),
+        borderRadius: BorderRadius.circular(18.r),
       ),
-      child: Container(
-        height: 190.h,
-        decoration: BoxDecoration(
-          color: Color(0xFFC8BB95),
-          borderRadius: BorderRadius.circular(18.r),
+      clipBehavior: Clip.hardEdge,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+        onTap: () => verifierAbonnementEtAcceder(
+          context: context,
+          onAbonne: () => Navigator.pushNamed(context, '/bibliotheque'),
         ),
-        clipBehavior: Clip.hardEdge,
+        child: Padding(
         padding: EdgeInsets.all(14.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -878,6 +889,8 @@ class _AccueilScreenState extends State<AccueilScreen> {
               ),
             ),
           ],
+        ),
+        ),
         ),
       ),
     );

@@ -250,7 +250,7 @@ class _DomainFilterContentState extends State<_DomainFilterContent> {
           const Text(
             'Filtré par niveau :',
             style: TextStyle(
-              fontSize: 17,
+              fontSize: 15,
               fontWeight: FontWeight.bold,
               color: Color(0xFF1A1A2E),
             ),
@@ -286,9 +286,13 @@ class _DomainFilterContentState extends State<_DomainFilterContent> {
               final isSelected = domaine.id == widget.selected?.id;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context, domaine),
-                  child: Container(
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                  child: InkWell(
+                    onTap: () => Navigator.pop(context, domaine),
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 16),
@@ -307,13 +311,14 @@ class _DomainFilterContentState extends State<_DomainFilterContent> {
                       domaine.nomDomaine,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 10,
                         fontWeight:
                             isSelected ? FontWeight.bold : FontWeight.normal,
                         color: isSelected
                             ? const Color(0xFF2E7D32)
                             : const Color(0xFF1A1A2E),
                       ),
+                    ),
                     ),
                   ),
                 ),

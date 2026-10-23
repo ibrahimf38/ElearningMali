@@ -45,13 +45,13 @@ class _OnboardingView extends StatelessWidget {
               padding: EdgeInsets.only(left: 20.w, top: 16.h),
               child: AnimatedOpacity(
                 opacity: isLastPage ? 0.0 : 1.0,
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 child: GestureDetector(
                   onTap: isLastPage ? null : () => _navigateToLogin(context),
                   child: Text(
                     'Sauter',
                     style: TextStyle(
-                      color: Color(0xFF2E7D32),
+                      color:const Color(0xFF2E7D32),
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                     ),
@@ -93,7 +93,7 @@ class _OnboardingView extends StatelessWidget {
                           ? () => _navigateToLogin(context)
                           : () => context.read<OnboardingProvider>().nextPage(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF2E7D32),
+                        backgroundColor:const Color(0xFF2E7D32),
                         foregroundColor: Colors.white,
                         padding: EdgeInsets.symmetric(horizontal: 32.w),
                         shape: RoundedRectangleBorder(

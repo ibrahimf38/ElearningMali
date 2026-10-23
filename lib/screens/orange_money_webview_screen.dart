@@ -174,17 +174,18 @@ class _OrangeMoneyWebViewScreenState extends State<OrangeMoneyWebViewScreen> {
         // (pas de confirmation détectée).
       },
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF2E7D32),
-          foregroundColor: Colors.white,
-          title: const Text('Paiement Orange Money'),
-          leading: IconButton(
+        // appBar: AppBar(
+        //   backgroundColor: const Color(0xFF2E7D32),
+        //   foregroundColor: Colors.white,
+        //   title: const Text('Paiement Orange Money'),
+          
+        // ),
+        body: Stack(
+          children: [
+            IconButton(
             icon: const Icon(Icons.close_rounded),
             onPressed: () => Navigator.pop(context, false),
           ),
-        ),
-        body: Stack(
-          children: [
             WebViewWidget(controller: _controller),
             if (_isLoading)
               const Center(

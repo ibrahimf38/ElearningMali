@@ -391,9 +391,13 @@ class _AbonnementView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Card forfait Découverte
-                    GestureDetector(
-                      onTap: () => _ouvrirChoixPaiement(context),
-                      child: Container(
+                    Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(16.r),
+                      child: InkWell(
+                        onTap: () => _ouvrirChoixPaiement(context),
+                        borderRadius: BorderRadius.circular(16.r),
+                        child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.all(18.r),
                         decoration: BoxDecoration(
@@ -435,6 +439,7 @@ class _AbonnementView extends StatelessWidget {
                               ],
                             ),
                           ],
+                        ),
                         ),
                       ),
                     ),
