@@ -94,6 +94,7 @@
 //   }
 // }
 
+import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mali_kalan/screens/apropos_screen.dart';
@@ -116,6 +117,7 @@ import 'screens/paiement_succes_screen.dart';
 import 'providers/abonnement_provider.dart';
 import 'services/session_manager.dart';
 import 'services/navigation_service.dart';
+import 'services/slide_page_transitions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -153,6 +155,17 @@ class ElearningApp extends StatelessWidget {
               primary: const Color(0xFF2E7D32),
             ),
             useMaterial3: true,
+            // Navigation fluide par glissement sur tous les écrans.
+            // iOS garde la transition native (avec geste « retour » par balayage).
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.android: SlidePageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.windows: SlidePageTransitionsBuilder(),
+                TargetPlatform.linux: SlidePageTransitionsBuilder(),
+                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+              },
+            ),
           ),
           // Si déjà connecté, on passe directement à l'accueil.
           initialRoute: isLoggedIn ? '/accueil' : '/onboarding',
